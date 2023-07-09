@@ -1,0 +1,51 @@
+conversor de moedas simples em JavaScript. Este código usa a API de conversão de moedas do ExchangeRate-API para obter as taxas de câmbio atualizadas:
+
+javascript
+Copy code
+// Função para converter a moeda
+function converterMoeda(valor, moedaOrigem, moedaDestino) {
+  // Substitua "SEU_API_KEY" pela sua chave de API do ExchangeRate-API
+  const apiKey = 'SEU_API_KEY';
+
+  // Monta a URL da API com base nas moedas selecionadas
+  const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${moedaOrigem}`;
+
+  // Faz uma requisição GET para obter as taxas de câmbio
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      // Verifica se a requisição foi bem-sucedida
+      if (data.result === 'success') {
+        // Obtém a taxa de câmbio da moeda de origem para a moeda de destino
+        const taxaCambio = data.conversion_rates[moedaDestino];
+
+        // Verifica se a moeda de destino é válida
+        if (taxaCambio) {
+          // Calcula o valor convertido
+          const valorConvertido = valor * taxaCambio;
+
+          // Exibe o resultado no console
+          console.log(`${valor} ${moedaOrigem} = ${valorConvertido} ${moedaDestino}`);
+        } else {
+          console.log('Moeda de destino inválida.');
+        }
+      } else {
+        console.log('Falha ao obter as taxas de câmbio.');
+      }
+    })
+    .catch(error => {
+      console.log('Ocorreu um erro:', error);
+    });
+}
+
+// Exemplo de uso
+converterMoeda(100, 'USD', 'EUR');
+Certifique-se de substituir 'SEU_API_KEY' pela sua chave de API válida do ExchangeRate-API. Você pode se inscrever no ExchangeRate-API para obter uma chave de API gratuita e limitada ou adquirir um plano premium para taxas de atualização em tempo real.
+
+Este é apenas um exemplo básico e pode ser expandido e aprimorado conforme suas necessidades.
+
+
+
+
+
+Regenerate response
